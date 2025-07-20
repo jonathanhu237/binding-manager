@@ -10,10 +10,10 @@ class Settings(BaseSettings):
     first_superuser_password: str
     first_superuser_email: str
 
-    postgres_host: str = "localhost"
-    postgres_port: int = 5432
     postgres_user: str = "binding_manager"
     postgres_password: str
+    postgres_host: str = "localhost"
+    postgres_port: int = 5432
     postgres_db: str = "binding_manager"
 
     @computed_field
