@@ -1,5 +1,4 @@
 from pydantic import PostgresDsn, computed_field
-from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,14 +19,14 @@ class Settings(BaseSettings):
     @computed_field
     @property
     def postgres_database_uri(self) -> PostgresDsn:
-        return MultiHostUrl.build(
+        return PostgresDsn.build(
             scheme="postgresql+psycopg2",
             username=self.postgres_user,
             password=self.postgres_password,
             host=self.postgres_host,
             port=self.postgres_port,
             path=self.postgres_db,
-        )  # type: ignore
+        )
 
     model_config = SettingsConfigDict()
 
