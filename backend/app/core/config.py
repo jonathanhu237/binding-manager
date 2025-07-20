@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     first_superuser_password: str
     first_superuser_email: str
 
-    postgres_server: str = "localhost"
+    postgres_host: str = "localhost"
     postgres_port: int = 5432
     postgres_user: str = "binding_manager"
     postgres_password: str
@@ -24,7 +24,7 @@ class Settings(BaseSettings):
             scheme="postgresql+psycopg2",
             username=self.postgres_user,
             password=self.postgres_password,
-            host=self.postgres_server,
+            host=self.postgres_host,
             port=self.postgres_port,
             path=self.postgres_db,
         )  # type: ignore
