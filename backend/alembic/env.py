@@ -25,7 +25,7 @@ target_metadata = None
 # ... etc.
 
 
-def get_url():
+def get_url() -> str:
     return str(settings.postgres_database_uri)
 
 
