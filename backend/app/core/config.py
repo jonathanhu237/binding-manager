@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     first_superuser_password: str
     first_superuser_email: str
 
-    postgres_user: str = "binding_manager"
+    postgres_username: str = "binding_manager"
     postgres_password: str
     postgres_host: str = "localhost"
     postgres_port: int = 5432
@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     def postgres_database_uri(self) -> PostgresDsn:
         return PostgresDsn.build(
             scheme="postgresql+psycopg2",
-            username=self.postgres_user,
+            username=self.postgres_username,
             password=self.postgres_password,
             host=self.postgres_host,
             port=self.postgres_port,
