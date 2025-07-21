@@ -1,5 +1,6 @@
-from pydantic import PostgresDsn, computed_field
+from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
@@ -18,15 +19,17 @@ class Settings(BaseSettings):
 
     @computed_field
     @property
-    def postgres_database_uri(self) -> PostgresDsn:
-        return PostgresDsn.build(
-            scheme="postgresql+psycopg2",
+    def postgres_database_uri(self) -> str:
+        url = URL.create(
+            "postgresql+psycopg2",
             username=self.postgres_username,
             password=self.postgres_password,
             host=self.postgres_host,
             port=self.postgres_port,
-            path=self.postgres_db,
-        )
+            database=self.postgres_db,
+        ).render_as_string(hide_password=False)
+
+        return str(url)
 
     model_config = SettingsConfigDict()
 
