@@ -27,6 +27,7 @@ def upgrade() -> None:
             username text UNIQUE NOT NULL,
             hashed_password bytea UNIQUE NOT NULL,
             email citext UNIQUE NOT NULL,
+            role text NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
             version integer NOT NULL DEFAULT 1
         );
     """)
@@ -35,7 +36,7 @@ def upgrade() -> None:
 def downgrade() -> None:
     """Downgrade schema."""
     op.execute("""
-        DROP EXTENSION IF EXISTS citext;
-
         DROP TABLE IF EXISTS users;
+               
+        DROP EXTENSION IF EXISTS citext;
     """)
