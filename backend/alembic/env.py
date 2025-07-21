@@ -26,7 +26,7 @@ target_metadata = None
 
 
 def get_url() -> str:
-    return str(settings.postgres_database_uri)
+    return settings.postgres_database_uri
 
 
 def run_migrations_offline() -> None:
