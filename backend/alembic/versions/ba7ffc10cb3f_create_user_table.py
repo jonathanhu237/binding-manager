@@ -1,8 +1,8 @@
 """create user table
 
-Revision ID: cb909da56976
-Revises:
-Create Date: 2025-07-20 14:05:59.649413
+Revision ID: ba7ffc10cb3f
+Revises: 2e5b5a8634c7
+Create Date: 2025-07-21 07:28:13.737875
 
 """
 
@@ -10,9 +10,10 @@ from typing import Sequence, Union
 
 from alembic import op
 
+
 # revision identifiers, used by Alembic.
-revision: str = "cb909da56976"
-down_revision: Union[str, Sequence[str], None] = None
+revision: str = "ba7ffc10cb3f"
+down_revision: Union[str, Sequence[str], None] = "2e5b5a8634c7"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -27,7 +28,7 @@ def upgrade() -> None:
             username text UNIQUE NOT NULL,
             hashed_password bytea UNIQUE NOT NULL,
             email citext UNIQUE NOT NULL,
-            role text NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
+            role_id bigserial NOT NULL references role(id) ON DELETE CASCADE,
             version integer NOT NULL DEFAULT 1
         );
     """)
