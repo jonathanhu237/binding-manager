@@ -3,9 +3,9 @@ from dataclasses import dataclass
 
 @dataclass
 class User:
-    id: int
-    username: str
-    password_hash: str
-    email: str
-    is_admin: bool
-    version: int
+    id: int | None = None
+    username: str | None = None
+    password_hash: str | None = None
+    email: str | None = None
+    is_admin: bool | None = None
+    version: int | None = None
