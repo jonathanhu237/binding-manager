@@ -26,7 +26,7 @@ def upgrade() -> None:
         CREATE TABLE users (
             id bigserial PRIMARY KEY,
             username text UNIQUE NOT NULL,
-            hashed_password bytea UNIQUE NOT NULL,
+            password_hash bytea UNIQUE NOT NULL,
             email citext UNIQUE NOT NULL,
             role_id bigserial NOT NULL references role(id) ON DELETE CASCADE,
             version integer NOT NULL DEFAULT 1
