@@ -7,9 +7,9 @@ class Settings(BaseSettings):
     jwt_secret: str
     jwt_expire_minutes: int = 7 * 24 * 60
 
-    first_superuser_username: str = "admin"
-    first_superuser_password: str
-    first_superuser_email: str
+    first_admin_username: str = "admin"
+    first_admin_password: str
+    first_admin_email: str
 
     postgres_username: str = "binding_manager"
     postgres_password: str
