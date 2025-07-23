@@ -14,6 +14,3 @@ migration-version:
 
 set-migration-version version:
     migrate -database {{postgres_dsn}} -path migrations force {{version}}
-
-run-api-server:
-    cd backend && go run cmd/apiserver/main.go
