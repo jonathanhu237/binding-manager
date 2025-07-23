@@ -2,7 +2,7 @@ package apiserver
 
 import "net/http"
 
-func (as *ApiServer) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+func (as *ApiServer) getServerInfo(w http.ResponseWriter, r *http.Request) {
 	data := envelope{
 		"status": "available",
 		"system_info": map[string]string{

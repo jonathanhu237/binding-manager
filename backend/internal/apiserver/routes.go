@@ -5,7 +5,7 @@ import "net/http"
 func (as *ApiServer) routes() http.Handler {
 	router := http.NewServeMux()
 
-	router.HandleFunc("/health-check", as.healthCheckHandler)
+	router.HandleFunc("GET /v1/server-info", as.getServerInfo)
 
 	return router
 }
