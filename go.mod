@@ -1,4 +1,4 @@
-module github.com/jonathanhu237/binding-manager/backend
+module github.com/jonathanhu237/binding-manager
 
 go 1.24.5
 

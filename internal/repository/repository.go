@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 
-	"github.com/jonathanhu237/binding-manager/backend/internal/config"
+	"github.com/jonathanhu237/binding-manager/internal/config"
 )
 
 type Repository struct {
