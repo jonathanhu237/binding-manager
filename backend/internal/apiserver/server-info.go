@@ -6,7 +6,7 @@ func (as *ApiServer) getServerInfo(w http.ResponseWriter, r *http.Request) {
 	data := envelope{
 		"status": "available",
 		"system_info": map[string]string{
-			"environment": as.config.Server.Environment,
+			"environment": as.cfg.Server.Environment,
 		},
 	}
 

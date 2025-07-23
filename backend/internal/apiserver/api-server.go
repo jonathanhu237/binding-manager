@@ -6,23 +6,26 @@ import (
 	"net/http"
 
 	"github.com/jonathanhu237/binding-manager/backend/internal/config"
+	"github.com/jonathanhu237/binding-manager/backend/internal/repository"
 )
 
 type ApiServer struct {
 	logger *slog.Logger
-	config *config.Config
+	cfg    *config.Config
+	repo   *repository.Repository
 }
 
-func New(logger *slog.Logger, config *config.Config) *ApiServer {
+func New(logger *slog.Logger, cfg *config.Config, repo *repository.Repository) *ApiServer {
 	return &ApiServer{
 		logger: logger,
-		config: config,
+		cfg:    cfg,
+		repo:   repo,
 	}
 }
 
 func (as *ApiServer) Start() {
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", as.config.Server.Port),
+		Addr:    fmt.Sprintf(":%d", as.cfg.Server.Port),
 		Handler: as.routes(),
 	}
 
