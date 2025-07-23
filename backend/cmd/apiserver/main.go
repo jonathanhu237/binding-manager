@@ -15,7 +15,7 @@ func main() {
 	// Load the configuration.
 	cfg, err := config.LoadConfig()
 	if err != nil {
-		slog.Error("Failed to load configuration.", "error", err)
+		slog.Error(err.Error())
 		os.Exit(1)
 	}
 

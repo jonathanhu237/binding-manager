@@ -28,6 +28,6 @@ func (as *ApiServer) Start() {
 
 	as.logger.Info("Starting API server", "address", srv.Addr)
 	if err := srv.ListenAndServe(); err != nil {
-		as.logger.Error("Something went wrong in the server", "error", err)
+		as.logger.Error(err.Error())
 	}
 }
