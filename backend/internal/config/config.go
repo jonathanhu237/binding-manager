@@ -20,11 +20,12 @@ type Config struct {
 	} `envPrefix:"FIRST_ADMIN_"`
 
 	Postgres struct {
-		Username string
-		Password string
-		Host     string
-		Port     string
-		Db       string
+		Username           string
+		Password           string
+		Host               string
+		Port               int
+		Db                 string
+		PingTimeoutSeconds int
 	} `envPrefix:"POSTGRES_"`
 }
 
