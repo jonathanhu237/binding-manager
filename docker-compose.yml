@@ -1,5 +1,5 @@
 services:
-  db:
+  postgres-db:
     image: postgres:17
     container_name: postgres-db
     environment:
@@ -9,8 +9,19 @@ services:
     networks:
       - backend
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - postgres-db-data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  migrator:
+    image: migrate/migrate
+    container_name: migrator
+    networks:
+      - backend
+    volumes:
+      - ./migrations:/migrations
+    entrypoint: [ "migrate" ]
+    depends_on:
+      - postgres-db
 
   api-server:
     build: ./backend
@@ -18,13 +29,13 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - postgres-db
     networks:
       - backend
     restart: unless-stopped
 
 volumes:
-  db-data:
+  postgres-db-data:
 
 
 networks:
