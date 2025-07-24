@@ -25,7 +25,7 @@ func New(logger *slog.Logger, cfg *config.Config, repo *repository.Repository) *
 
 func (as *ApiServer) Start() {
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", as.cfg.Server.Port),
+		Addr:    fmt.Sprintf(":%d", as.cfg.ApiServer.Port),
 		Handler: as.routes(),
 	}
 
