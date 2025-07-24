@@ -14,5 +14,3 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /main ./cmd/apiserver
 FROM scratch
 
 COPY --from=builder /main /main
-
-CMD ["/main"]

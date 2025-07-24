@@ -4,5 +4,15 @@ services:
       - "5432:5432"
 
   api-server:
+    build:
+      target: builder
+    command: ["go", "run", "/app/cmd/apiserver"]
+    develop:
+      watch:
+        - path: ./backend/go.mod
+          action: rebuild
+        - path: ./backend
+          action: sync
+          target: /app
     ports:
       - "${API_SERVER_PORT}:${API_SERVER_PORT}"
