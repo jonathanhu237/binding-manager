@@ -24,6 +24,11 @@ func New(logger *slog.Logger, cfg *config.Config, repo *repository.Repository) *
 }
 
 func (as *ApiServer) Start() {
+	if err := as.init(); err != nil {
+		as.logger.Error(err.Error())
+		return
+	}
+
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", as.cfg.ApiServer.Port),
 		Handler: as.routes(),
