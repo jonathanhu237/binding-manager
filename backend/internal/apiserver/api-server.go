@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/jonathanhu237/binding-manager/internal/config"
-	"github.com/jonathanhu237/binding-manager/internal/repository"
+	"github.com/jonathanhu237/binding-manager/backend/internal/config"
+	"github.com/jonathanhu237/binding-manager/backend/internal/repository"
 )
 
 type ApiServer struct {

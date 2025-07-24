@@ -9,9 +9,9 @@ import (
 	"time"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
-	"github.com/jonathanhu237/binding-manager/internal/apiserver"
-	"github.com/jonathanhu237/binding-manager/internal/config"
-	"github.com/jonathanhu237/binding-manager/internal/repository"
+	"github.com/jonathanhu237/binding-manager/backend/internal/apiserver"
+	"github.com/jonathanhu237/binding-manager/backend/internal/config"
+	"github.com/jonathanhu237/binding-manager/backend/internal/repository"
 )
 
 func main() {
