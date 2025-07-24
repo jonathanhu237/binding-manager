@@ -1,16 +1,24 @@
-postgres_dsn := "postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+set dotenv-load := true
+set dotenv-required := true
 
+postgres_dsn := "postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable"
+
+[group('database migration')]
 new-migration name:
-    migrate create -ext sql -dir migrations -seq {{name}}
+    docker compose run --rm migrator create -ext sql -dir migrations -seq {{name}}
 
+[group('database migration')]
 migrate-up step:
-    migrate -database {{postgres_dsn}} -path migrations up {{step}}
+    docker compose run --rm migrator -database {{postgres_dsn}} -path migrations up {{step}}
 
+[group('database migration')]
 migrate-down step:
-    migrate -database {{postgres_dsn}} -path migrations down {{step}}
+    docker compose run --rm migrator -database {{postgres_dsn}} -path migrations down {{step}}
 
+[group('database migration')]
 migration-version:
-    migrate -database {{postgres_dsn}} -path migrations version
+    docker compose run --rm migrator -database {{postgres_dsn}} -path migrations version
 
+[group('database migration')]
 set-migration-version version:
-    migrate -database {{postgres_dsn}} -path migrations force {{version}}
+    docker compose run --rm migrator -database {{postgres_dsn}} -path migrations force {{version}}
