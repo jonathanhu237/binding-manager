@@ -11,4 +11,9 @@ var (
 		Message: "The email already exists.",
 		Details: nil,
 	}
+	ErrUsernameNotExists = &UnifiedError{
+		Code:    100003,
+		Message: "The username does not exist.",
+		Details: nil,
+	}
 )
