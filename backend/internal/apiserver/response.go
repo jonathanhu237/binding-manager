@@ -1,6 +1,7 @@
 package apiserver
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/jonathanhu237/binding-manager/backend/internal/unierror"
@@ -30,7 +31,7 @@ func (as *ApiServer) logError(r *http.Request, err error) {
 	as.logger.Error(err.Error(), "method", r.Method, "url", r.URL.String())
 }
 
-func (as *ApiServer) errorResponse(w http.ResponseWriter, r *http.Request, err *unierror.UnifiedError) {
+func (as *ApiServer) errorResponse(w http.ResponseWriter, r *http.Request, status int, err error) {
 	resp := unifiedResponse{
 		Success: false,
 		Data:    nil,
@@ -47,7 +48,7 @@ func (as *ApiServer) errorResponse(w http.ResponseWriter, r *http.Request, err *
 		}
 	}
 
-	if err := as.writeJson(w, err.Code, resp, nil); err != nil {
+	if err := as.writeJson(w, status, resp, nil); err != nil {
 		as.logError(r, err)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
@@ -55,5 +56,13 @@ func (as *ApiServer) errorResponse(w http.ResponseWriter, r *http.Request, err *
 
 func (as *ApiServer) internalServerError(w http.ResponseWriter, r *http.Request, err error) {
 	as.logError(r, err)
-	as.errorResponse(w, r, unierror.ErrInternalServerError)
+	as.errorResponse(w, r, http.StatusInternalServerError, unierror.ErrInternalServerError)
+}
+
+func (as *ApiServer) badRequestError(w http.ResponseWriter, r *http.Request, err error) {
+	as.errorResponse(w, r, http.StatusBadRequest, unierror.ErrBadRequest(err))
+}
+
+func (as *ApiServer) unauthorizedError(w http.ResponseWriter, r *http.Request, err error) {
+	as.errorResponse(w, r, http.StatusUnauthorized, err)
 }
