@@ -9,5 +9,7 @@ func (as *ApiServer) routes() http.Handler {
 
 	router.HandleFunc("POST /v1/access-token", as.createAccessToken)
 
+	router.HandleFunc("POST /v1/users", as.createUser)
+
 	return router
 }
