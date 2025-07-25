@@ -16,12 +16,15 @@ func (as *ApiServer) init() error {
 	as.logger.Info("No admin user found, creating first admin user")
 
 	// Create the first admin user.
-	first_admin := &domain.User{
-		Username: as.cfg.FirstAdmin.Username,
-		IsAdmin:  true,
-	}
-	if err := first_admin.Password.Set(as.cfg.FirstAdmin.Password); err != nil {
+	passwordHash, err := domain.GeneratePasswordHash(as.cfg.FirstAdmin.Password)
+	if err != nil {
 		return err
+	}
+
+	first_admin := &domain.User{
+		Username:     as.cfg.FirstAdmin.Username,
+		PasswordHash: passwordHash,
+		IsAdmin:      true,
 	}
 
 	// Insert the first admin user into the database.
