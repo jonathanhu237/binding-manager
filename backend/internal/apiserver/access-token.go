@@ -50,7 +50,7 @@ func (as *ApiServer) createAccessToken(w http.ResponseWriter, r *http.Request) {
 
 	// Generate the access token.
 	expires := time.Now().Add(time.Minute * time.Duration(as.cfg.Jwt.ExpireMinutes))
-	access_token, err := domain.GenerateAccessToken(as.cfg.Jwt.Secret, user, expires)
+	accessToken, err := domain.GenerateAccessToken(as.cfg.Jwt.Secret, user, expires)
 	if err != nil {
 		as.internalServerError(w, r, err)
 		return
@@ -59,7 +59,7 @@ func (as *ApiServer) createAccessToken(w http.ResponseWriter, r *http.Request) {
 	// Set the HTTP-only cookie.
 	cookie := &http.Cookie{
 		Name:     "__binding_manager_access_token",
-		Value:    string(access_token),
+		Value:    string(accessToken),
 		Expires:  expires,
 		HttpOnly: true,
 		Secure:   true,
