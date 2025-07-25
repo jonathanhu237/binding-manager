@@ -7,5 +7,7 @@ func (as *ApiServer) routes() http.Handler {
 
 	router.HandleFunc("GET /v1/server-info", as.getServerInfo)
 
+	router.HandleFunc("POST /v1/access-token", as.createAccessToken)
+
 	return router
 }
