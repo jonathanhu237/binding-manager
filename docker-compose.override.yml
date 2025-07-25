@@ -12,7 +12,7 @@ services:
         - path: ./backend/go.mod
           action: rebuild
         - path: ./backend
-          action: sync
+          action: sync+restart
           target: /app
     ports:
       - "${API_SERVER_PORT}:${API_SERVER_PORT}"
