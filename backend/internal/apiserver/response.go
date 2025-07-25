@@ -34,7 +34,17 @@ func (as *ApiServer) errorResponse(w http.ResponseWriter, r *http.Request, err *
 	resp := unifiedResponse{
 		Success: false,
 		Data:    nil,
-		Error:   err,
+	}
+
+	var unifiedErr *unierror.UnifiedError
+	if errors.As(err, &unifiedErr) {
+		resp.Error = unifiedErr
+	} else {
+		resp.Error = &unierror.UnifiedError{
+			Code:    status,
+			Message: err.Error(),
+			Details: nil,
+		}
 	}
 
 	if err := as.writeJson(w, err.Code, resp, nil); err != nil {
