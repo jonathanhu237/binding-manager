@@ -42,7 +42,7 @@ func (ur *UserRepository) Insert(user *domain.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(ur.cfg.Postgres.QueryTimeoutSeconds)*time.Second)
 	defer cancel()
 
-	if err := ur.dbpool.QueryRowContext(ctx, query, user.Username, user.Password.Hash, user.IsAdmin).Scan(&user.Id, &user.Version); err != nil {
+	if err := ur.dbpool.QueryRowContext(ctx, query, user.Username, user.PasswordHash, user.IsAdmin).Scan(&user.Id, &user.Version); err != nil {
 		var pgErr *pgconn.PgError
 		if errors.As(err, &pgErr) {
 			switch pgErr.Code {
@@ -62,4 +62,31 @@ func (ur *UserRepository) Insert(user *domain.User) error {
 	}
 
 	return nil
+}
+
+func (ur *UserRepository) GetByUsername(username string) (*domain.User, error) {
+	query := `
+		SELECT id, username, password_hash, is_admin, version
+		FROM users
+		WHERE username = $1;
+	`
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(ur.cfg.Postgres.QueryTimeoutSeconds)*time.Second)
+	defer cancel()
+
+	var user domain.User
+
+	if err := ur.dbpool.QueryRowContext(ctx, query, username).Scan(
+		&user.Id,
+		&user.Username,
+		&user.PasswordHash,
+		&user.IsAdmin,
+		&user.Version,
+	); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, unierror.ErrUsernameNotExists
+		}
+		return nil, unierror.ErrInternalServerError
+	}
+	return &user, nil
 }

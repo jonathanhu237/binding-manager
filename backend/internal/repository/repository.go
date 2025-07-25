@@ -11,6 +11,7 @@ type Repository struct {
 	User interface {
 		CheckAdminExists() (bool, error)
 		Insert(*domain.User) error
+		GetByUsername(username string) (*domain.User, error)
 	}
 }
 
