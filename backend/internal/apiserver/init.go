@@ -21,14 +21,14 @@ func (as *ApiServer) init() error {
 		return err
 	}
 
-	first_admin := &domain.User{
+	firstAdmin := &domain.User{
 		Username:     as.cfg.FirstAdmin.Username,
 		PasswordHash: passwordHash,
 		IsAdmin:      true,
 	}
 
 	// Insert the first admin user into the database.
-	if err := as.repo.User.Insert(first_admin); err != nil {
+	if err := as.repo.User.Insert(firstAdmin); err != nil {
 		return err
 	}
 
