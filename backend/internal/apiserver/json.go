@@ -12,9 +12,5 @@ func (as *ApiServer) writeJson(w http.ResponseWriter, status int, data any, head
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 
-	if err := json.NewEncoder(w).Encode(data); err != nil {
-		return err
-	}
-
-	return nil
+	return json.NewEncoder(w).Encode(data)
 }
