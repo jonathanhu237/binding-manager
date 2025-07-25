@@ -5,7 +5,7 @@ postgres_dsn := "postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES
 
 [group('database migration')]
 new-migration name:
-    docker compose run --rm migrator create -ext sql -dir migrations -seq {{name}}
+    docker compose run --rm --user "$(id -u):$(id -g)" migrator create -ext sql -dir migrations -seq {{name}}
 
 [group('database migration')]
 migrate-up step:
