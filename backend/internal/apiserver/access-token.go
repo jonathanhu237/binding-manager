@@ -58,7 +58,7 @@ func (as *ApiServer) createAccessToken(w http.ResponseWriter, r *http.Request) {
 
 	// Set the HTTP-only cookie.
 	cookie := &http.Cookie{
-		Name:     "access_token",
+		Name:     "__binding_manager_access_token",
 		Value:    string(access_token),
 		Expires:  expires,
 		HttpOnly: true,
