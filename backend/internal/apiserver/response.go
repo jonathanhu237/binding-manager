@@ -66,3 +66,7 @@ func (as *ApiServer) badRequestError(w http.ResponseWriter, r *http.Request, err
 func (as *ApiServer) unauthorizedError(w http.ResponseWriter, r *http.Request, err error) {
 	as.errorResponse(w, r, http.StatusUnauthorized, err)
 }
+
+func (as *ApiServer) conflictError(w http.ResponseWriter, r *http.Request, err error) {
+	as.errorResponse(w, r, http.StatusConflict, err)
+}
