@@ -5,14 +5,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type User struct {
-	Id           uuid.UUID    `json:"id"`
-	Username     string       `json:"username"`
-	PasswordHash PasswordHash `json:"-"`
-	IsAdmin      bool         `json:"is_admin"`
-	Version      int          `json:"version"`
-}
-
 type PasswordHash string
 
 func GeneratePasswordHash(plaintext string) (PasswordHash, error) {
@@ -27,4 +19,12 @@ func GeneratePasswordHash(plaintext string) (PasswordHash, error) {
 
 func (ph *PasswordHash) Verify(plaintext string) error {
 	return bcrypt.CompareHashAndPassword([]byte(*ph), []byte(plaintext))
+}
+
+type User struct {
+	Id           uuid.UUID    `json:"id"`
+	Username     string       `json:"username"`
+	PasswordHash PasswordHash `json:"-"`
+	IsAdmin      bool         `json:"is_admin"`
+	Version      int          `json:"version"`
 }
