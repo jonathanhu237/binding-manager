@@ -18,7 +18,6 @@ func (as *ApiServer) init() error {
 	// Create the first admin user.
 	first_admin := &domain.User{
 		Username: as.cfg.FirstAdmin.Username,
-		Email:    as.cfg.FirstAdmin.Email,
 		IsAdmin:  true,
 	}
 	if err := first_admin.Password.Set(as.cfg.FirstAdmin.Password); err != nil {

@@ -16,7 +16,6 @@ type Config struct {
 	FirstAdmin struct {
 		Username string
 		Password string
-		Email    string
 	} `envPrefix:"FIRST_ADMIN_"`
 
 	Postgres struct {

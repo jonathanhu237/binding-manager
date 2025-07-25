@@ -34,15 +34,15 @@ func (ur *UserRepository) CheckAdminExists() (bool, error) {
 
 func (ur *UserRepository) Insert(user *domain.User) error {
 	query := `
-		INSERT INTO users (username, password_hash, email, is_admin)
-		VALUES ($1, $2, $3, $4)
+		INSERT INTO users (username, password_hash, is_admin)
+		VALUES ($1, $2, $3)
 		RETURNING id, version;
 	`
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(ur.cfg.Postgres.QueryTimeoutSeconds)*time.Second)
 	defer cancel()
 
-	if err := ur.dbpool.QueryRowContext(ctx, query, user.Username, user.Password.Hash, user.Email, user.IsAdmin).Scan(&user.Id, &user.Version); err != nil {
+	if err := ur.dbpool.QueryRowContext(ctx, query, user.Username, user.Password.Hash, user.IsAdmin).Scan(&user.Id, &user.Version); err != nil {
 		var pgErr *pgconn.PgError
 		if errors.As(err, &pgErr) {
 			switch pgErr.Code {
